@@ -297,6 +297,14 @@ async function prompt(): Promise<Answers> {
     ? await confirm("Include the Mastra agent-workflow module?", false)
     : false;
   const portBase = Number(await ask("Web port base", "3000"));
+  if (apps.includes("supabase")) {
+    console.log(
+      "  Local Supabase ports follow 543XY (X = this project, Y = the service - api, db, studio, etc)."
+    );
+    console.log(
+      "  If you run other local Supabase projects, pick a base ending in a different X (e.g. 54350, 54360, ...) to avoid port clashes."
+    );
+  }
   const supabasePortBase = apps.includes("supabase")
     ? Number(await ask("Supabase port base", "54340"))
     : 54340;
@@ -567,7 +575,7 @@ async function main(): Promise<void> {
 
     if (safe) {
       remove(".git");
-      execFileSync("git", ["init", "-q"], { cwd: ROOT });
+      execFileSync("git", ["init", "-q", "-b", "main"], { cwd: ROOT });
       execFileSync("git", ["add", "-A"], { cwd: ROOT });
       execFileSync(
         "git",

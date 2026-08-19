@@ -35,7 +35,16 @@ Optional module: **Mastra** (embedded agent-workflow runtime in `apps/api`), inc
 
 ## Getting started
 
-Requires **Node 24.19.0+** and **npm 12.0.2+** (pinned via Volta), plus Docker for local Supabase.
+### Requirements
+
+| Requirement    | Why                                                     | Install on macOS                                                          |
+| -------------- | ------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Node 24.19.0+  | Runtime — version pinned via Volta                      | `brew install volta && volta setup`, then restart your shell              |
+| npm 12.0.2+    | Workspace manager — also pinned via Volta               | Installed alongside Node the first time Volta sees this repo              |
+| Docker Desktop | Runs the local Supabase stack (Postgres, Auth, Storage) | `brew install --cask docker`, then launch Docker.app once to finish setup |
+| Supabase CLI   | `supabase start` / `migration` / `gen` commands         | `brew install supabase/tap/supabase`                                      |
+
+Volta reads the `volta` field in `package.json` and transparently switches to the pinned Node/npm versions whenever you `cd` into this repo — no manual version management needed.
 
 ```sh
 npm install

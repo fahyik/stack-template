@@ -560,6 +560,8 @@ async function main(): Promise<void> {
     writeJson("package.json", pkg);
   }
 
+  let originUrl: string | null = null;
+  let reinitialised = false;
   if (a.gitInit) {
     let safe = true;
     try {
@@ -574,6 +576,17 @@ async function main(): Promise<void> {
     }
 
     if (safe) {
+      // `git init` below wipes .git, which would otherwise drop the origin
+      // remote set up by `gh repo create --clone` / `git clone`.
+      try {
+        originUrl = execFileSync("git", ["remote", "get-url", "origin"], {
+          cwd: ROOT,
+          encoding: "utf8",
+        }).trim();
+      } catch {
+        // No origin configured, which is fine.
+      }
+
       remove(".git");
       execFileSync("git", ["init", "-q", "-b", "main"], { cwd: ROOT });
       execFileSync("git", ["add", "-A"], { cwd: ROOT });
@@ -582,6 +595,12 @@ async function main(): Promise<void> {
         ["commit", "-qm", `chore: initialise ${a.name} from stack-template`],
         { cwd: ROOT }
       );
+      if (originUrl) {
+        execFileSync("git", ["remote", "add", "origin", originUrl], {
+          cwd: ROOT,
+        });
+      }
+      reinitialised = true;
     } else {
       console.log(
         "  ! this repo has real history - skipping git re-init. Commit manually."
@@ -590,9 +609,14 @@ async function main(): Promise<void> {
   }
 
   const P = a.portBase;
+  const pushHint =
+    reinitialised && originUrl
+      ? "    0. git push -u origin main --force   (local history was just" +
+        " rewritten, so the first push needs --force)\n"
+      : "";
   console.log(`
   ${a.name} initialised (scope @${a.scope})
-
+${pushHint}
     1. cp apps/api/.env.default apps/api/.env.development.local
        cp apps/webapp/.env.default apps/webapp/.env.local   (and backoffice / landing)
     2. npm run start -w apps/supabase

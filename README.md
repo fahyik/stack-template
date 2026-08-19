@@ -45,7 +45,7 @@ cp apps/api/.env.default apps/api/.env.development.local
 cp apps/webapp/.env.default apps/webapp/.env.local        # and backoffice / landing
 
 # 2. Local Supabase
-npm run start -w apps/supabase
+npm run dev -w apps/supabase
 npx supabase status --workdir apps/supabase   # copy the API URL + anon key into the .env files
 npm run db:migrate:up -w apps/supabase
 

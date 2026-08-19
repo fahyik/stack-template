@@ -5,7 +5,7 @@
   "author": "",
   "type": "module",
   "scripts": {
-    "start": "supabase start",
+    "dev": "supabase start",
     "stop": "supabase stop",
     "db:migrate:up": "supabase migration up",
     "db:migrate:down": "supabase migration down"

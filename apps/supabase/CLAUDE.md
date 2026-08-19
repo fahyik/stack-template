@@ -17,7 +17,7 @@ This is deliberate: keeping the data-access surface in one place (the api) makes
 
 ## Commands
 
-- `npm run start` - Start local Supabase instance
+- `npm run dev` - Start local Supabase instance
 - `npm run stop` - Stop local Supabase instance
 
 ## Database Migrations

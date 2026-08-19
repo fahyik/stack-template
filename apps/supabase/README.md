@@ -11,6 +11,10 @@ If you run more than one local Supabase project on the same machine, each one ne
 Run the following command:
 
 ```bash
+# make sure the file exists first
+echo "[]" > supabase/signing_keys.json
+
+# generate key
 supabase gen signing-key
 ```
 

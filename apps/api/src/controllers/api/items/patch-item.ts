@@ -7,7 +7,7 @@ import { respondInvalidPayload } from "../../lib/respond-invalid-payload.js";
 import {
   itemParamsSchema,
   patchItemBodySchema,
-} from "@repo/api-types/api/items";
+} from "@repo/interfaces/api/items";
 
 export async function patchItem(
   req: AuthenticatedRequest,

@@ -4,7 +4,7 @@ import type { AuthenticatedRequest } from "../../../middleware/interfaces.js";
 import { archiveItem } from "../../../services/items/archive-item.js";
 import { respondInvalidPayload } from "../../lib/respond-invalid-payload.js";
 
-import { itemParamsSchema } from "@repo/api-types/api/items";
+import { itemParamsSchema } from "@repo/interfaces/api/items";
 
 // Gated by checkAdmin in router.ts — see the "authorization is middleware"
 // rule in the api-stack skill.

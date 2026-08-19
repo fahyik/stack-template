@@ -41,7 +41,7 @@
     "@mastra/memory": "1.27.0",
     "@mastra/observability": "1.17.1",
     "@mastra/pg": "1.21.0",
-    "@repo/api-types": "*",
+    "@repo/interfaces": "*",
     "@repo/logger": "*",
     "@supabase/supabase-js": "2.112.3",
     "body-parser": "2.3.0",

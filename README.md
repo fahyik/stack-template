@@ -22,7 +22,7 @@ npm run init
 | `apps/landing`               | Marketing site — prerendered to static HTML at build time                          | 3000  |
 | `apps/supabase`              | Local Supabase (Postgres + Auth) + migrations                                      | 5434x |
 | `packages/ui`                | React components on Tailwind v4, three-layer design tokens                         | —     |
-| `packages/api-types`         | The API response contract + per-resource zod schemas and domain types              | —     |
+| `packages/interfaces`        | The API response contract + per-resource zod schemas and domain types              | —     |
 | `packages/logger`            | Winston logger with correlation-id propagation                                     | —     |
 | `packages/eslint-config`     | Shared ESLint flat configs (base / server / react)                                 | —     |
 | `packages/typescript-config` | Shared tsconfig bases                                                              | —     |
@@ -71,8 +71,8 @@ Once you have a real resource, delete:
 apps/supabase/supabase/migrations/20260101000100_items.sql   # or write a drop migration
 apps/api/src/services/items/
 apps/api/src/controllers/api/items/
-packages/api-types/src/domain/item.ts
-packages/api-types/src/api/items.ts
+packages/interfaces/src/domain/item.ts
+packages/interfaces/src/api/items.ts
 apps/webapp/src/views/items/
 apps/backoffice/src/views/items/
 apps/backoffice/src/routes/_authed/items/

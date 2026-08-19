@@ -4,7 +4,7 @@ import type { AuthenticatedRequest } from "../../../middleware/interfaces.js";
 import { getItem as getItemService } from "../../../services/items/get-item.js";
 import { respondInvalidPayload } from "../../lib/respond-invalid-payload.js";
 
-import { itemParamsSchema } from "@repo/api-types/api/items";
+import { itemParamsSchema } from "@repo/interfaces/api/items";
 
 export async function getItem(
   req: AuthenticatedRequest,

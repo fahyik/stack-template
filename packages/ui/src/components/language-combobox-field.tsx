@@ -10,7 +10,7 @@ import {
   ComboboxList,
 } from "./ui/combobox.js";
 
-// BCP-47 codes. Mirrors PREFERRED_LANGUAGE_CODES in @repo/api-types —
+// BCP-47 codes. Mirrors PREFERRED_LANGUAGE_CODES in @repo/interfaces —
 // keep these in lockstep when adding/removing a language. The validation
 // schema in the api enforces enum membership.
 const SUPPORTED_LANGUAGES: { code: string; label: string }[] = [

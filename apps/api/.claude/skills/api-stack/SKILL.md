@@ -1,6 +1,6 @@
 ---
 name: api-stack
-description: "Full guide to creating or modifying an api endpoint in apps/api: business logic in src/services/<domain>/, domain types in packages/api-types/src/domain/, controllers (resource-folder layout, router wiring, thin handlers), the API response contract (ApiEndpoint, success/reason shapes), request validation with zod schemas in packages/api-types/src/api/<resource>.ts, and middleware wiring (auth, checkAdmin, file upload). Use this skill whenever creating or editing files under apps/api/src/services/**, apps/api/src/controllers/{api,public}/**, packages/api-types/src/api/**, or packages/api-types/src/domain/**; defining a new endpoint, adding a router, designing a service module or domain entity, writing zod request/response schemas, or shaping a new API response. Trigger even when the user only mentions one layer (e.g. 'add an items service', 'new orders endpoint', 'wire admin guard on a route') — the layers are coupled and the skill covers the whole flow."
+description: "Full guide to creating or modifying an api endpoint in apps/api: business logic in src/services/<domain>/, domain types in packages/interfaces/src/domain/, controllers (resource-folder layout, router wiring, thin handlers), the API response contract (ApiEndpoint, success/reason shapes), request validation with zod schemas in packages/interfaces/src/api/<resource>.ts, and middleware wiring (auth, checkAdmin, file upload). Use this skill whenever creating or editing files under apps/api/src/services/**, apps/api/src/controllers/{api,public}/**, packages/interfaces/src/api/**, or packages/interfaces/src/domain/**; defining a new endpoint, adding a router, designing a service module or domain entity, writing zod request/response schemas, or shaping a new API response. Trigger even when the user only mentions one layer (e.g. 'add an items service', 'new orders endpoint', 'wire admin guard on a route') — the layers are coupled and the skill covers the whole flow."
 ---
 
 # API stack (apps/api)
@@ -57,14 +57,14 @@ Counter-example: `services/items/` is flat (`get-item.ts`, `list-items.ts`, `cre
 - **ESM `.js` import extension** even when the source is `.ts`. Reason: Node ESM and the build both require it. (See project `CLAUDE.md`.)
 - **Tests colocated in `__tests__/`** with two suffixes: `*.unit.test.ts` for pure logic (no DB, no I/O), `*.integration.test.ts` for anything that touches Postgres. Reason: the suffix tells the reader and CI which suite needs the local DB. Integration tests must self-clean — create throwaway fixtures, delete in `finally`, lean on `ON DELETE CASCADE`. (See [`apps/api/CLAUDE.md`](../../CLAUDE.md) "Testing".)
 
-## 2. Domain types vs API types — `packages/api-types/src/domain/` vs `src/api/`
+## 2. Domain types vs API types — `packages/interfaces/src/domain/` vs `src/api/`
 
-`@repo/api-types` has two distinct sub-folders. Knowing which one a new type belongs in is the single most common mistake in this layer.
+`@repo/interfaces` has two distinct sub-folders. Knowing which one a new type belongs in is the single most common mistake in this layer.
 
 | Layer      | Lives in                                            | What it is                                                                                                                                                                                                                                     | Examples                                                                                       |
 | ---------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Domain** | `packages/api-types/src/domain/<entity>.ts` | The app-language shape of an entity and its value-level enums. What services return, controllers respond with, dashboards render, background workflows reason about. Independent of any one HTTP message or DB row.                                | `Item`                                    |
-| **API**    | `packages/api-types/src/api/<resource>.ts`         | The HTTP-contract layer: zod schemas for `req.body`/`req.query`/`req.params`, plus `ApiEndpoint<...>` aliases. Almost always **imports** and is often a **superset** of a domain type (e.g. a list response wraps the entity with pagination). | `listItemsQuerySchema`, `itemParamsSchema`, `ListItems`, `GetItem` |
+| **Domain** | `packages/interfaces/src/domain/<entity>.ts` | The app-language shape of an entity and its value-level enums. What services return, controllers respond with, dashboards render, background workflows reason about. Independent of any one HTTP message or DB row.                                | `Item`                                    |
+| **API**    | `packages/interfaces/src/api/<resource>.ts`         | The HTTP-contract layer: zod schemas for `req.body`/`req.query`/`req.params`, plus `ApiEndpoint<...>` aliases. Almost always **imports** and is often a **superset** of a domain type (e.g. a list response wraps the entity with pagination). | `listItemsQuerySchema`, `itemParamsSchema`, `ListItems`, `GetItem` |
 
 ### Default rules
 
@@ -92,19 +92,19 @@ Nest into a subfolder (`domain/billing/invoice.ts`) only once an area genuinely 
 
 ### Importing — there is no barrel
 
-There is **no barrel** — `packages/api-types` has no `src/index.ts`. Consumers import the exact file that owns the symbol, via the per-file wildcard `exports` map in its `package.json`:
+There is **no barrel** — `packages/interfaces` has no `src/index.ts`. Consumers import the exact file that owns the symbol, via the per-file wildcard `exports` map in its `package.json`:
 
 ```ts
-import type { ApiEndpoint, Serialized } from "@repo/api-types/api-endpoint";
-import type { Item } from "@repo/api-types/domain/item";
-import { createItemBodySchema } from "@repo/api-types/api/items";
+import type { ApiEndpoint, Serialized } from "@repo/interfaces/api-endpoint";
+import type { Item } from "@repo/interfaces/domain/item";
+import { createItemBodySchema } from "@repo/interfaces/api/items";
 ```
 
 Adding a new file needs no wiring: `./api/*` and `./domain/*` already resolve. The subpaths work under both `NodeNext` (apps/api) and `Bundler` (the frontends).
 
 ### The canonical example for new work
 
-`packages/api-types/src/domain/item.ts` (the entity) + `packages/api-types/src/api/items.ts` (request schemas + `ApiEndpoint` aliases that import `Item` from domain). Mirror this layout for any new entity.
+`packages/interfaces/src/domain/item.ts` (the entity) + `packages/interfaces/src/api/items.ts` (request schemas + `ApiEndpoint` aliases that import `Item` from domain). Mirror this layout for any new entity.
 
 
 ## 3. Controllers, validation, middleware
@@ -144,7 +144,7 @@ Reason: a resource's routes stay co-located regardless of who can call them, and
 
 Controllers must not import `sql` or query `app.*` tables directly. The handler's job is exactly:
 
-1. **Validate** `req.body` / `req.params` / `req.query` with zod schemas from `@repo/api-types` (see "Request validation" below).
+1. **Validate** `req.body` / `req.params` / `req.query` with zod schemas from `@repo/interfaces` (see "Request validation" below).
 2. **Call services** — one or more named functions from `services/<domain>/`, taking named-arg objects and returning camelCased domain shapes.
 3. **Return the result** — `res.json(result)` on a service failure (the discriminated union is already the wire shape); a small `{ success: true, data }` reconstruction on success (because services return entity-named fields like `result.provider` and the contract field is `data`).
 
@@ -152,7 +152,7 @@ Example: `controllers/api/items/patch-item.ts` calls `getItem` from `services/it
 
 ### API response contract
 
-All `/api/*` and `/public/*` controllers must return shapes that satisfy `ApiEndpoint` from `@repo/api-types`:
+All `/api/*` and `/public/*` controllers must return shapes that satisfy `ApiEndpoint` from `@repo/interfaces`:
 
 - **Success:** `res.json({ success: true, data })`. The `data` field is mandatory; endpoints with no payload pass `data: null` and type as `ApiEndpoint<..., null>`.
 - **Failure:** `res.json({ success: false, reason })`. When the service already returns this shape, forward it directly: `res.json(result)`. Don't reconstruct `{ success: false, reason: result.reason }` — it's redundant and would silently drop any future fields the service adds.
@@ -181,7 +181,7 @@ The 404 fallback in `app.ts` (`{ success: false, reason: "not_found" }`) is for 
 
 ### Request validation
 
-Every `/api/*` and `/public/*` controller validates `req.body`, `req.params`, and `req.query` with zod schemas. Schemas live in `@repo/api-types` (one file per resource at `packages/api-types/src/api/<resource>.ts`) and are paired with an `ApiEndpoint<...>` type that uses `z.infer<typeof ...>` for body/query/params. Reason: the wire types stay derived from the schema, so there are no hand-maintained type duplicates that drift out of sync with the validator.
+Every `/api/*` and `/public/*` controller validates `req.body`, `req.params`, and `req.query` with zod schemas. Schemas live in `@repo/interfaces` (one file per resource at `packages/interfaces/src/api/<resource>.ts`) and are paired with an `ApiEndpoint<...>` type that uses `z.infer<typeof ...>` for body/query/params. Reason: the wire types stay derived from the schema, so there are no hand-maintained type duplicates that drift out of sync with the validator.
 
 On any validation failure, respond `400 { success: false, reason: "invalid_payload" }`. When `process.env.APP_ENV !== "production"`, also include an `issues` array (raw zod issues from `safeParse(...).error.issues`) so engineers can see which fields failed. Never include `issues` in production — it's a dev-only debug extension. The single `invalid_payload` reason intentionally collapses what used to be per-field reasons; field-level detail belongs in the dev `issues` array, not in the contract.
 
@@ -216,4 +216,4 @@ router.post("/...", async (req, res, next) => {
 });
 ```
 
-See `packages/api-types/src/api/items.ts` and `apps/api/src/controllers/api/items/patch-item.ts` as canonical examples — the whole `items` slice exists to be copied.
+See `packages/interfaces/src/api/items.ts` and `apps/api/src/controllers/api/items/patch-item.ts` as canonical examples — the whole `items` slice exists to be copied.

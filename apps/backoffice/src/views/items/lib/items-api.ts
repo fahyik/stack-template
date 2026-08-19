@@ -1,7 +1,7 @@
 import { apiFetch } from "../../../lib/api-client";
 
-import type { Serialized } from "@repo/api-types/api-endpoint";
-import type { Item } from "@repo/api-types/domain/item";
+import type { Serialized } from "@repo/interfaces/api-endpoint";
+import type { Item } from "@repo/interfaces/domain/item";
 
 export type WireItem = Serialized<Item>;
 

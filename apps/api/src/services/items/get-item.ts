@@ -1,7 +1,7 @@
 import { sql } from "../../db/index.js";
 import { type ItemRow, mapItemRow } from "./item-row.js";
 
-import type { Item } from "@repo/api-types/domain/item";
+import type { Item } from "@repo/interfaces/domain/item";
 
 /**
  * Services return a discriminated union rather than throwing for business

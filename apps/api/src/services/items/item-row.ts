@@ -1,4 +1,4 @@
-import type { Item } from "@repo/api-types/domain/item";
+import type { Item } from "@repo/interfaces/domain/item";
 
 /**
  * The database row shape, snake_case, exactly as Postgres returns it. It stays

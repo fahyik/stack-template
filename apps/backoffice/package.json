@@ -14,7 +14,7 @@
     "extends": "../../package.json"
   },
   "dependencies": {
-    "@repo/api-types": "*",
+    "@repo/interfaces": "*",
     "@repo/ui": "*",
     "@supabase/supabase-js": "2.112.3",
     "@tanstack/react-query": "5.101.4",

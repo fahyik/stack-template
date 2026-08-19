@@ -4,7 +4,7 @@ import type { AuthenticatedRequest } from "../../../middleware/interfaces.js";
 import { createItem } from "../../../services/items/create-item.js";
 import { respondInvalidPayload } from "../../lib/respond-invalid-payload.js";
 
-import { createItemBodySchema } from "@repo/api-types/api/items";
+import { createItemBodySchema } from "@repo/interfaces/api/items";
 
 export async function postItem(
   req: AuthenticatedRequest,

@@ -17,7 +17,7 @@
       "path": "packages/ui"
     },
     {
-      "path": "packages/api-types"
+      "path": "packages/interfaces"
     },
     {
       "path": "packages/logger"

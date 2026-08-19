@@ -46,7 +46,7 @@ cd apps/api && NODE_OPTIONS=--experimental-vm-modules npx jest path/to/file.test
 **Shared packages** (all scoped `@repo/*`):
 
 - `packages/ui` — React component library on Tailwind v4, `clsx` + `tailwind-merge`. Consumed as raw source (no build step). Exports are per-file only — `@repo/ui/components/*`, `@repo/ui/hooks/*`, `@repo/ui/lib/*`, `@repo/ui/globals.css`. There is no barrel. See `packages/ui/CLAUDE.md`.
-- `packages/api-types` — The API response contract (`ApiEndpoint`, `Serialized`) plus per-resource zod schemas and domain types shared between the api and the frontends
+- `packages/interfaces` — The API response contract (`ApiEndpoint`, `Serialized`) plus per-resource zod schemas and domain types shared between the api and the frontends
 - `packages/logger` — Isomorphic logger wrapper (winston + correlation IDs)
 - `packages/eslint-config` — Shared ESLint flat configs: `base.mjs`, `server.mjs` (for `apps/api`), `react.mjs` (for the frontends and `packages/ui`)
 - `packages/typescript-config` — Shared tsconfig: `base.json`, `vite-app.json`, `react-library.json`

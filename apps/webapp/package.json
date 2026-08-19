@@ -16,7 +16,7 @@
     "extends": "../../package.json"
   },
   "dependencies": {
-    "@repo/api-types": "*",
+    "@repo/interfaces": "*",
     "@repo/ui": "*",
     "@marsidev/react-turnstile": "1.6.0",
     "@supabase/supabase-js": "2.112.3",

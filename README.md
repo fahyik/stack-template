@@ -53,6 +53,8 @@ npm run db:migrate:up -w apps/supabase
 npm run dev
 ```
 
+If you already have another local Supabase project running, its ports will clash with this one — edit the port prefix in `apps/supabase/supabase/config.toml` first. See `apps/supabase/README.md` for details.
+
 Then sign in at http://localhost:3002/login with the seeded user in `apps/supabase/supabase/seeds/init.sql`.
 
 Top-level turbo tasks: `npm run build`, `npm run lint`, `npm run test`, `npm run dev`.

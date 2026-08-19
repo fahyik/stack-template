@@ -1,5 +1,11 @@
 # Supabase Local Development Setup
 
+## Avoiding Port Clashes
+
+Supabase's local services run on `543XY` — `X` identifies the project, `Y` identifies the service (fixed by the Supabase CLI: API, DB, Studio, Inbucket, Analytics, pooler, etc). The CLI's default is `X = 2` (i.e. `5432Y`).
+
+If you run more than one local Supabase project on the same machine, each one needs a distinct `X` or their ports will clash. Change `X` for every port in `supabase/config.toml` — this project already uses `X = 4` (see the note at the top of the file).
+
 ### 1. Generate Signing Keys
 
 Run the following command:

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 <!-- TODO: describe your product in two or three lines — who uses it and what it does. -->
 
-Turborepo + npm workspaces, scoped `@repo/*`. Uses npm (not yarn/pnpm/bun). Requires Node >= 24.19.0, npm >= 11.17.0 (pinned via Volta).
+Turborepo + npm workspaces, scoped `@repo/*`. Uses npm (not yarn/pnpm/bun). Requires Node >= 24.19.0, npm >= 12.0.2 (pinned via Volta).
 
 ## Commands
 

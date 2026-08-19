@@ -35,7 +35,7 @@ Optional module: **Mastra** (embedded agent-workflow runtime in `apps/api`), inc
 
 ## Getting started
 
-Requires **Node 24.19.0+** and **npm 11.17.0+** (pinned via Volta), plus Docker for local Supabase.
+Requires **Node 24.19.0+** and **npm 12.0.2+** (pinned via Volta), plus Docker for local Supabase.
 
 ```sh
 npm install

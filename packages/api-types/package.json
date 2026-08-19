@@ -1,0 +1,37 @@
+{
+  "name": "@repo/api-types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./api-endpoint": {
+      "types": "./dist/api-endpoint.d.ts",
+      "default": "./dist/api-endpoint.js"
+    },
+    "./api/*": {
+      "types": "./dist/api/*.d.ts",
+      "default": "./dist/api/*.js"
+    },
+    "./domain/*": {
+      "types": "./dist/domain/*.d.ts",
+      "default": "./dist/domain/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "eslint": "10.8.1",
+    "typescript": "6.0.3"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

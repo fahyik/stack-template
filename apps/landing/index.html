@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Landing</title>
+    <meta name="description" content="TODO: describe your product." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!--
+      This file is the template for every prerendered page: scripts/prerender.ts
+      reads it, injects each route's markup into #root, and writes one HTML file
+      per route in src/routes.ts. The `<div id="root"></div>` below must stay
+      exactly as-is — the prerender script asserts on it and fails the build if
+      it can't find it.
+
+      Per-page <title>/<meta> are not handled here. If you need them, extend
+      scripts/prerender.ts to substitute per route, or add a head-management
+      library.
+
+      Structured data (JSON-LD), analytics pixels and verification tags go here.
+    -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

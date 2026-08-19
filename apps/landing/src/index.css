@@ -1,0 +1,13 @@
+@import "@repo/ui/globals.css";
+@import "./animations.css";
+
+@source "./**/*.{ts,tsx}";
+
+html,
+body {
+  overflow-x: clip;
+}
+
+html {
+  scroll-padding-top: 8rem;
+}

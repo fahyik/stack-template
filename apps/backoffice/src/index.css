@@ -1,0 +1,12 @@
+@import "@repo/ui/globals.css";
+
+@source "./**/*.{ts,tsx}";
+
+/* The AuthedLayout shell is `h-svh` and PageLayout owns vertical scrolling.
+   Lock the document so only the inner scroll container scrolls — without this,
+   Chrome lets the html element become scrollable too, which slides the sidebar
+   off-screen alongside main's content. */
+html,
+body {
+  overflow: hidden;
+}

@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "REPLACE_ME-webapp"
+  },
+  "targets": {
+    "REPLACE_ME-webapp": {
+      "hosting": {
+        "production": ["REPLACE_ME-webapp"],
+        "staging": ["REPLACE_ME-webapp-staging"]
+      }
+    }
+  }
+}

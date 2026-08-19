@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your sign-in code</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #faf9fc;
+      font-family:
+        &quot;Inter Tight&quot;,
+        -apple-system,
+        BlinkMacSystemFont,
+        &quot;Segoe UI&quot;,
+        Roboto,
+        sans-serif;
+      color: #1a1430;
+    "
+  >
+    <!-- Preheader (inbox preview text, hidden in body) -->
+    <div
+      style="
+        display: none;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        color: transparent;
+      "
+    >
+      Your 6-digit sign-in code.
+    </div>
+
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="background-color: #faf9fc; padding: 48px 20px"
+    >
+      <tr>
+        <td align="center">
+          <table
+            width="440"
+            cellpadding="0"
+            cellspacing="0"
+            role="presentation"
+            style="
+              background-color: #ffffff;
+              border: 1px solid #e1d9f0;
+              border-radius: 22px;
+              padding: 44px 40px;
+            "
+          >
+            <!-- Wordmark -->
+            <tr>
+              <td align="center" style="padding-bottom: 36px">
+                <span
+                  style="
+                    font-family:
+                      &quot;Instrument Serif&quot;, Georgia,
+                      &quot;Times New Roman&quot;, serif;
+                    font-style: italic;
+                    font-size: 36px;
+                    font-weight: 400;
+                    color: #3d5afe;
+                    letter-spacing: -0.025em;
+                    line-height: 1;
+                  "
+                  >your&nbsp;app</span
+                >
+              </td>
+            </tr>
+
+            <!-- Eyebrow -->
+            <tr>
+              <td align="center" style="padding-bottom: 8px">
+                <span
+                  style="
+                    font-family:
+                      &quot;JetBrains Mono&quot;, ui-monospace, SFMono-Regular,
+                      Menlo, monospace;
+                    font-size: 11px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    letter-spacing: 0.14em;
+                    color: #756e92;
+                  "
+                  >Sign-in code</span
+                >
+              </td>
+            </tr>
+
+            <!-- Heading -->
+            <tr>
+              <td align="center" style="padding-bottom: 20px">
+                <h1
+                  style="
+                    margin: 0;
+                    font-family:
+                      &quot;Inter Tight&quot;,
+                      -apple-system,
+                      BlinkMacSystemFont,
+                      sans-serif;
+                    font-size: 24px;
+                    font-weight: 600;
+                    color: #1a1430;
+                    letter-spacing: -0.02em;
+                    line-height: 1.2;
+                  "
+                >
+                  Confirm it&rsquo;s you
+                </h1>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td
+                align="center"
+                style="
+                  padding-bottom: 28px;
+                  font-family:
+                    &quot;Inter Tight&quot;,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                  font-size: 14px;
+                  color: #4a4368;
+                  line-height: 1.55;
+                "
+              >
+                Enter this code to finish signing in.
+              </td>
+            </tr>
+
+            <!-- Token -->
+            <tr>
+              <td align="center" style="padding-bottom: 28px">
+                <div
+                  style="
+                    display: inline-block;
+                    padding: 18px 28px;
+                    background-color: #faf9fc;
+                    border: 1.5px solid #e1d9f0;
+                    border-radius: 14px;
+                    font-family:
+                      &quot;JetBrains Mono&quot;, ui-monospace, SFMono-Regular,
+                      Menlo, monospace;
+                    font-size: 32px;
+                    font-weight: 500;
+                    letter-spacing: 0.2em;
+                    color: #3d5afe;
+                    line-height: 1;
+                  "
+                >
+                  {{ .Token }}
+                </div>
+              </td>
+            </tr>
+
+            <!-- Footer note -->
+            <tr>
+              <td
+                align="center"
+                style="
+                  font-family:
+                    &quot;Inter Tight&quot;,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                  font-size: 13px;
+                  color: #756e92;
+                  line-height: 1.55;
+                "
+              >
+                This code expires in 60 minutes. If you didn&rsquo;t request it,
+                you can ignore this email.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

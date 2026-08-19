@@ -1,0 +1,49 @@
+# Template-only. Proves `scripts/init.ts` still produces a working repo for a
+# range of answers. `init` deletes this workflow from generated projects.
+name: Template selftest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: full
+            args: --apps api,webapp,backoffice,landing,supabase
+          - name: no-mastra
+            args: --apps api,webapp,backoffice,landing,supabase --no-mastra
+          - name: api-only
+            args: --apps api,supabase --no-mastra
+          - name: landing-only
+            args: --apps landing --no-mastra
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+      - name: Run init on a scratch copy
+        run: |
+          mkdir -p /tmp/out
+          cp -R . /tmp/out/proj
+          cd /tmp/out/proj
+          rm -rf node_modules .git
+          node scripts/init.ts --yes --no-git \
+            --name selftest --scope selftest ${{ matrix.args }}
+      - name: Build the generated project
+        working-directory: /tmp/out/proj
+        run: npm run lint && npm run build && npm run test
+      - name: Assert init cleaned up after itself
+        working-directory: /tmp/out/proj
+        run: |
+          test ! -f TEMPLATE.md
+          test ! -f scripts/init.ts
+          test ! -f .github/workflows/template-selftest.yml
+          ! grep -rIn '@repo/\|stack-template\|stack_template' . \
+              --exclude-dir=node_modules --exclude-dir=dist --exclude=package-lock.json

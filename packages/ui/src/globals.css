@@ -1,0 +1,352 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "@fontsource/inter-tight/300.css";
+@import "@fontsource/inter-tight/400.css";
+@import "@fontsource/inter-tight/500.css";
+@import "@fontsource/inter-tight/600.css";
+@import "@fontsource/inter-tight/700.css";
+@import "@fontsource/inter-tight/800.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+@source "../../apps/**/*.{ts,tsx}";
+@source "./**/*.{ts,tsx}";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------- Layer 1: raw design tokens ----------
+ *
+ * Role-named primitives. Layer 2 maps these onto Tailwind utilities and
+ * Layer 3 builds base styles on top, so this is the ONLY layer you edit to
+ * rebrand. See packages/ui/CLAUDE.md → "Swapping the palette".
+ */
+
+:root {
+  --radius: 0.75rem;
+
+  /* ══════════════ SWAP ME — brand palette (placeholders) ══════════════
+   * These values are a deliberately plain zinc + indigo default. Replace
+   * them with your own; do not rename the tokens, and do not edit anything
+   * below `@theme inline` — the semantic mapping is stable and shadcn
+   * depends on it.
+   */
+
+  /* Surfaces */
+  --surface-base: #fafafa;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f4f4f5;
+  --surface-border: #e4e4e7;
+  --surface-rule: #ededf0;
+
+  /* Text */
+  --text-primary: #18181b;
+  --text-secondary: #3f3f46;
+  --text-muted: #71717a;
+  --text-placeholder: #a1a1aa;
+
+  /* Accent ramp. --brand-2 is the primary CTA colour. */
+  --brand-1: #0891b2;
+  --brand-2: #4f46e5;
+  --brand-3: #7c3aed;
+  --brand-4: #db2777;
+  --brand-5: #d97706;
+  --brand-primary: var(--brand-2);
+
+  /* Glow tints, as raw RGB triples for use inside rgba() in shadows. */
+  --glow-1: 129 140 248;
+  --glow-2: 244 114 182;
+
+  /* Semantic */
+  --ok: #16a34a;
+  --warn: #d97706;
+  --err: #dc2626;
+
+  /* ══════════════ END SWAP ME ══════════════ */
+
+  /* Gradients, derived from the ramp above. */
+  --brand-gradient: linear-gradient(
+    90deg,
+    var(--brand-1) 0%,
+    var(--brand-2) 30%,
+    var(--brand-3) 60%,
+    var(--brand-4) 100%
+  );
+  --brand-gradient-v: linear-gradient(
+    180deg,
+    var(--brand-2),
+    var(--brand-3),
+    var(--brand-4)
+  );
+  --brand-radial:
+    radial-gradient(
+      ellipse at 30% 20%,
+      rgb(var(--glow-1) / 0.28),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 70% 30%,
+      rgb(var(--glow-1) / 0.32),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 50% 90%,
+      rgb(var(--glow-2) / 0.28),
+      transparent 55%
+    );
+
+  /* Sidebar (shadcn) */
+  --sidebar: var(--surface-sunken);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: var(--surface-raised);
+  --sidebar-accent: var(--surface-raised);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--surface-border);
+  --sidebar-ring: var(--brand-primary);
+
+  /* Charts (shadcn) */
+  --chart-1: var(--brand-1);
+  --chart-2: var(--brand-2);
+  --chart-3: var(--brand-3);
+  --chart-4: var(--brand-4);
+  --chart-5: var(--brand-5);
+
+  /* Effects */
+  --grain-opacity: 0.035;
+}
+
+.dark {
+  /* ══════════════ SWAP ME — dark palette (placeholders) ══════════════ */
+  --surface-base: #09090b;
+  --surface-raised: #18181b;
+  --surface-sunken: #27272a;
+  --surface-border: #3f3f46;
+  --surface-rule: #27272a;
+
+  --text-primary: #fafafa;
+  --text-secondary: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --text-placeholder: #71717a;
+
+  --brand-1: #22d3ee;
+  --brand-2: #818cf8;
+  --brand-3: #a78bfa;
+  --brand-4: #f472b6;
+  --brand-5: #fbbf24;
+  --brand-primary: var(--brand-2);
+  /* ══════════════ END SWAP ME ══════════════ */
+
+  --sidebar: #101013;
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--surface-sunken);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--surface-border);
+  --sidebar-ring: var(--brand-primary);
+}
+
+/* ---------- Layer 2: Tailwind v4 theme exposure ----------
+ *
+ * Do not edit to rebrand — change Layer 1 values instead. These names are
+ * the shadcn contract; renaming them breaks `npx shadcn add`.
+ */
+
+@theme inline {
+  /* Colors → utilities like bg-background, text-foreground, border-border */
+  --color-background: var(--surface-base);
+  --color-foreground: var(--text-primary);
+  --color-card: var(--surface-raised);
+  --color-card-foreground: var(--text-primary);
+  --color-popover: var(--surface-raised);
+  --color-popover-foreground: var(--text-primary);
+  --color-muted: var(--surface-sunken);
+  --color-muted-foreground: var(--text-muted);
+  --color-secondary: var(--surface-sunken);
+  --color-secondary-foreground: var(--text-secondary);
+  --color-accent: var(--surface-sunken);
+  --color-accent-foreground: var(--text-primary);
+  --color-border: var(--surface-border);
+  --color-input: var(--surface-border);
+  --color-rule: var(--surface-rule);
+  --color-ring: var(--brand-primary);
+  --color-placeholder: var(--text-placeholder);
+
+  /* Brand ramp */
+  --color-brand-1: var(--brand-1);
+  --color-brand-2: var(--brand-2);
+  --color-brand-3: var(--brand-3);
+  --color-brand-4: var(--brand-4);
+  --color-brand-5: var(--brand-5);
+
+  /* Primary CTA */
+  --color-primary: var(--brand-primary);
+  --color-primary-foreground: var(--surface-raised);
+
+  /* Semantic */
+  --color-success: var(--ok);
+  --color-success-foreground: var(--surface-raised);
+  --color-warning: var(--warn);
+  --color-warning-foreground: var(--surface-raised);
+  --color-destructive: var(--err);
+  --color-destructive-foreground: var(--surface-raised);
+
+  /* Sidebar (shadcn) */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Charts (shadcn) */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Fonts. Swap these together with the @fontsource imports at the top of
+   * this file and the matching deps in packages/ui/package.json. */
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-sans:
+    "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Radii */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Shadows */
+  --shadow-brand-sm:
+    0 8px 24px -8px rgb(var(--glow-1) / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+  --shadow-brand-accent:
+    0 2px 12px 2px rgb(var(--glow-2) / 0.35),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+  --shadow-brand-md: 0 24px 48px -20px rgb(var(--glow-1) / 0.35);
+  --shadow-brand-lg: 0 30px 80px -32px rgb(var(--glow-1) / 0.3);
+  --shadow-brand-xl:
+    0 40px 80px -20px rgb(var(--glow-1) / 0.35),
+    inset 0 1px 0 rgb(255 255 255 / 0.6);
+  --shadow-glass:
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    0 12px 32px -16px rgb(var(--glow-1) / 0.22);
+  --shadow-glow: 0 0 40px rgb(var(--glow-1) / 0.45);
+  --shadow-ring-focus: 0 0 0 4px rgb(var(--glow-1) / 0.18);
+
+  /* Tracking */
+  --tracking-display: -0.025em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.1em;
+  --tracking-wider: 0.14em;
+  --tracking-widest: 0.2em;
+
+  /* Motion */
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --animate-drift: drift 18s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 1.6s ease-in-out infinite;
+  --animate-brand-sweep: brand-sweep 10s ease-in-out infinite;
+}
+
+/* ---------- Layer 3: base + utilities ---------- */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    color: var(--color-foreground);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: var(--brand-primary);
+    color: #ffffff;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(2%, 1%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-1%, 2%, 0) scale(1.02);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(var(--glow-2) / 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgb(var(--glow-2) / 0);
+  }
+}
+
+@keyframes brand-sweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@utility brand-bg {
+  background-image: var(--brand-gradient);
+}
+
+@utility brand-text {
+  background-image: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-inline: 0.1em;
+  padding-block: 0.1em;
+  margin-inline: -0.1em;
+  margin-block: -0.1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

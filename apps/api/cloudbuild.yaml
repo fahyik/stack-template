@@ -1,0 +1,44 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: Build
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        IMAGE=$LOCATION-docker.pkg.dev/$PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME
+        docker buildx create --use --driver docker-container --name builder
+        docker buildx build \
+          --cache-from type=registry,ref=$$IMAGE:buildcache \
+          --cache-to   type=registry,ref=$$IMAGE:buildcache,mode=max \
+          --tag $$IMAGE:$COMMIT_SHA \
+          --tag $$IMAGE:latest \
+          --file apps/api/Dockerfile \
+          --push \
+          .
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    id: Deploy
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - $_SERVICE_NAME
+      - --image=$LOCATION-docker.pkg.dev/$PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
+      - --region=$LOCATION
+      - --platform=managed
+      - --labels=managed-by=cloud-build,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,trigger=$TRIGGER_NAME
+      - --quiet
+
+options:
+  substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+
+substitutions:
+  _AR_REPOSITORY: cloud-run-source-deploy
+  _SERVICE_NAME: stack-template-api
+
+tags:
+  - cloud-build-deploy-cloud-run
+  - stack-template-api

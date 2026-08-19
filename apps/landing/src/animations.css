@@ -1,0 +1,22 @@
+/* Page-specific keyframes for this app only.
+ *
+ * Shared motion (drift, pulse-ring, brand-sweep) is tokenised in
+ * @repo/ui/globals.css and exposed there as `animate-*` utilities. Keep
+ * one-off marketing animation here rather than pushing it into the shared
+ * token file.
+ */
+
+@theme {
+  --animate-slide-up: slide-up 350ms var(--ease-spring);
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

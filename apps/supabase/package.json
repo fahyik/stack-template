@@ -1,0 +1,20 @@
+{
+  "name": "@repo/supabase",
+  "version": "0.0.0",
+  "description": "Local Supabase (Postgres + Auth) for the monorepo",
+  "author": "",
+  "type": "module",
+  "scripts": {
+    "start": "supabase start",
+    "stop": "supabase stop",
+    "db:migrate:up": "supabase migration up",
+    "db:migrate:down": "supabase migration down"
+  },
+  "devDependencies": {
+    "supabase": "2.115.0"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  },
+  "private": true
+}

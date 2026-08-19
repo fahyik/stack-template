@@ -1,0 +1,86 @@
+{
+  "name": "@repo/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "dev": "TZ=UTC NODE_ENV=development DOTENV_CONFIG_PATH=./.env.development.local nodemon --delay 0.7 --exec \"tsx --inspect=0.0.0.0:9229 --no-cache --require dotenv/config ./src/index.ts\" -e .ts",
+    "lint": "tsc --noEmit && eslint \"src/**/*.ts*\" --fix --max-warnings 0",
+    "start": "TZ=UTC NODE_ENV=production node ./dist/index.js",
+    "test": "TZ=UTC NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test NODE_OPTIONS=\"--experimental-vm-modules --require dotenv/config\" jest --detectOpenHandles",
+    "mastra:studio": "mastra studio --port 3011"
+  },
+  "jest": {
+    "preset": "@repo/jest-presets/node",
+    "testMatch": [
+      "**/__tests__/**/*.test.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1",
+      "^libphonenumber-js$": "<rootDir>/../../node_modules/libphonenumber-js/index.cjs"
+    },
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "useESM": true
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@mastra/core": "1.60.0",
+    "@mastra/express": "1.5.2",
+    "@mastra/loggers": "1.2.0",
+    "@mastra/memory": "1.27.0",
+    "@mastra/observability": "1.17.1",
+    "@mastra/pg": "1.21.0",
+    "@repo/api-types": "*",
+    "@repo/logger": "*",
+    "@supabase/supabase-js": "2.112.3",
+    "body-parser": "2.3.0",
+    "cors": "2.8.6",
+    "express": "5.2.1",
+    "express-jwt": "8.5.1",
+    "google-auth-library": "10.7.0",
+    "jwks-rsa": "4.1.0",
+    "mastra": "1.25.1",
+    "multer": "2.2.0",
+    "pg": "8.23.0",
+    "pino": "10.3.1",
+    "pino-pretty": "13.1.3",
+    "postgres": "3.4.9",
+    "uuid": "14.0.2",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/jest-presets": "*",
+    "@repo/typescript-config": "*",
+    "@eslint/js": "10.0.1",
+    "@mastra/duckdb": "1.6.2",
+    "@types/body-parser": "1.19.6",
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.6",
+    "@types/jest": "30.0.0",
+    "@types/multer": "2.2.0",
+    "@types/node": "24.13.2",
+    "@types/pg": "8.23.1",
+    "dotenv": "17.4.2",
+    "eslint": "10.8.1",
+    "jest": "30.4.2",
+    "nodemon": "3.1.14",
+    "tsconfig-paths": "4.2.0",
+    "tsx": "4.23.12",
+    "typescript": "6.0.3"
+  },
+  "volta": {
+    "extends": "../../package.json"
+  }
+}

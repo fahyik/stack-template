@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+.next
+coverage
+# Vendored upstream skills — don't reformat someone else's content.
+/.claude/skills
+/apps/api/.claude/skills
